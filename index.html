@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ارزیابی BSC برنامه حمل‌ونقل عمومی | اتوبوس، تاکسی، قطار شهری</title>
+  <meta name="description" content="سامانه ارزیابی برنامه حمل‌ونقل عمومی شهر بر مبنای مدل کارت امتیازی متوازن (BSC) با ۱۲ شاخص در چهار منظر مالی، مشتری، فرآیندهای داخلی و یادگیری و رشد برای اتوبوس، تاکسی و قطار شهری." />
+  <meta name="author" content="BSC Public Transport Evaluation" />
+  <meta name="theme-color" content="#0e7490" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BSC حمل‌ونقل عمومی" />
+  <meta property="og:title" content="ارزیابی BSC برنامه حمل‌ونقل عمومی شهر" />
+  <meta property="og:description" content="کارت امتیازی متوازن برای سنجش عملکرد اتوبوس، تاکسی و قطار شهری در چهار منظر BSC." />
+  <meta property="og:locale" content="fa_IR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ارزیابی BSC برنامه حمل‌ونقل عمومی شهر" />
+  <meta name="twitter:description" content="کارت امتیازی متوازن برای سنجش عملکرد اتوبوس، تاکسی و قطار شهری در چهار منظر BSC." />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar container" aria-label="ناوبری اصلی">
+      <a href="#hero" class="brand">
+        <span class="brand-icon" aria-hidden="true">🚌</span>
+        <span>BSC حمل‌ونقل عمومی</span>
+      </a>
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-label="باز و بسته کردن منو">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="navMenu" class="nav-links">
+        <li><a href="#bsc">چهار منظر</a></li>
+        <li><a href="#scorecard">کارت امتیازی</a></li>
+        <li><a href="#map">نقشه استراتژی</a></li>
+        <li><a href="#method">روش‌شناسی</a></li>
+        <li>
+          <button id="themeToggle" class="theme-toggle" aria-label="تغییر تم صفحه">
+            <span class="theme-icon">🌙</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ================= معرفی ================= -->
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">ارزیابی عملکرد با مدل کارت امتیازی متوازن</p>
+          <h1>سنجش برنامه حمل‌ونقل عمومی شهر <span class="accent">با مدل BSC</span></h1>
+          <p class="hero-sub">
+            ارزیابی یکپارچه سه شیوه <strong>اتوبوس</strong>، <strong>تاکسی</strong> و
+            <strong>قطار شهری</strong> در چهار منظر مالی، مشتری، فرآیندهای داخلی و
+            یادگیری و رشد — با امتیازدهی وزنی، مقایسه شیوه‌ها و نقشه علت و معلولی.
+          </p>
+          <div class="hero-actions">
+            <a href="#scorecard" class="btn btn-primary">ورود به کارت امتیازی</a>
+            <a href="#method" class="btn btn-outline">روش محاسبه</a>
+          </div>
+          <ul class="hero-modes" aria-label="شیوه‌های مورد ارزیابی">
+            <li><span aria-hidden="true">🚌</span> اتوبوس</li>
+            <li><span aria-hidden="true">🚕</span> تاکسی</li>
+            <li><span aria-hidden="true">🚇</span> قطار شهری</li>
+          </ul>
+        </div>
+
+        <div class="hero-gauge-card">
+          <h2 class="gauge-title">امتیاز کل برنامه</h2>
+          <div class="gauge" id="overallGauge" role="img" aria-label="امتیاز کل برنامه حمل‌ونقل عمومی">
+            <svg viewBox="0 0 200 200" class="gauge-svg" aria-hidden="true">
+              <circle class="gauge-track" cx="100" cy="100" r="82"></circle>
+              <circle class="gauge-progress" id="gaugeProgress" cx="100" cy="100" r="82"></circle>
+            </svg>
+            <div class="gauge-center">
+              <strong id="gaugeValue">—</strong>
+              <small>از ۱۰۰</small>
+            </div>
+          </div>
+          <p id="gaugeNote" class="gauge-note">در حال محاسبه…</p>
+          <ul class="gauge-legend" id="gaugeLegend"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= چهار منظر BSC ================= -->
+    <section id="bsc" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>چهار منظر کارت امتیازی متوازن</h2>
+          <p>هر منظر با شاخص‌های اختصاصی خود سنجیده می‌شود؛ امتیاز هر منظر میانگین وزنی شاخص‌های آن است.</p>
+        </header>
+        <div id="perspectiveGrid" class="perspective-grid"><!-- ساخته‌شده در JS --></div>
+      </div>
+    </section>
+
+    <!-- ================= کارت امتیازی ================= -->
+    <section id="scorecard" class="section section-alt">
+      <div class="container">
+        <header class="section-head">
+          <h2>کارت امتیازی شیوه‌های حمل‌ونقل</h2>
+          <p>شیوه را انتخاب کنید تا شاخص‌ها، امتیاز هر منظر و جزئیات محاسبه نمایش داده شود.</p>
+        </header>
+
+        <div class="mode-tabs" role="tablist" aria-label="انتخاب شیوه حمل‌ونقل">
+          <button class="mode-tab active" role="tab" data-mode="bus" aria-selected="true">
+            <span aria-hidden="true">🚌</span> اتوبوس
+          </button>
+          <button class="mode-tab" role="tab" data-mode="taxi" aria-selected="false">
+            <span aria-hidden="true">🚕</span> تاکسی
+          </button>
+          <button class="mode-tab" role="tab" data-mode="metro" aria-selected="false">
+            <span aria-hidden="true">🚇</span> قطار شهری
+          </button>
+        </div>
+
+        <div class="scorecard-layout">
+          <div class="scorecard-main">
+            <div class="table-head">
+              <h3 id="tableTitle">شاخص‌های شیوه انتخابی</h3>
+              <span class="muted" id="modeTotal">—</span>
+            </div>
+            <div class="table-wrap">
+              <table class="kpi-table">
+                <thead>
+                  <tr>
+                    <th scope="col">منظر</th>
+                    <th scope="col">شاخص</th>
+                    <th scope="col">مقدار فعلی</th>
+                    <th scope="col">هدف</th>
+                    <th scope="col">امتیاز</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <aside class="scorecard-side">
+            <div class="panel">
+              <h3>مقایسه سه شیوه در چهار منظر</h3>
+              <canvas id="radarChart" role="img" aria-label="نمودار راداری مقایسه شیوه‌ها"></canvas>
+              <ul class="legend" id="radarLegend"></ul>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head">
+                <h3>وزن‌دهی منظرها</h3>
+                <button id="resetWeights" class="link-btn">بازنشانی</button>
+              </div>
+              <p class="muted small">وزن‌ها به‌طور خودکار به ۱۰۰٪ نرمال می‌شوند.</p>
+              <div id="weightControls" class="weight-controls"></div>
+              <div class="weight-sum">
+                <span>جمع وزن‌ها</span>
+                <strong id="weightSum">۱۰۰٪</strong>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= نقشه استراتژی ================= -->
+    <section id="map" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>نقشه استراتژی (زنجیره علت و معلول)</h2>
+          <p>در BSC شاخص‌های هر منظر به منظر بالاتر اثر می‌گذارند؛ از یادگیری و رشد تا نتایج مالی.</p>
+        </header>
+
+        <div class="strategy-map">
+          <article class="sm-layer" data-perspective="learning">
+            <div class="sm-label">
+              <span class="sm-emoji" aria-hidden="true">🎓</span>
+              <div>
+                <h3>یادگیری و رشد</h3>
+                <p>توانمندسازی نیروی انسانی و نوسازی ناوگان</p>
+              </div>
+            </div>
+            <ul class="sm-objectives">
+              <li>آموزش مستمر رانندگان و کارکنان خدمات مشتری</li>
+              <li>جوان‌سازی ناوگان و جایگزینی خودروهای فرسوده</li>
+            </ul>
+          </article>
+          <div class="sm-arrow" aria-hidden="true">▲</div>
+
+          <article class="sm-layer" data-perspective="internal">
+            <div class="sm-label">
+              <span class="sm-emoji" aria-hidden="true">⚙️</span>
+              <div>
+                <h3>فرآیندهای داخلی</h3>
+                <p>نظم سرویس، سرعت تجاری و دسترس‌پذیری ایستگاه</p>
+              </div>
+            </div>
+            <ul class="sm-objectives">
+              <li>ارتقای دقت زمان‌بندی و کاهش تأخیر</li>
+              <li>بهبود دسترسی افراد کم‌توان به ایستگاه‌ها</li>
+            </ul>
+          </article>
+          <div class="sm-arrow" aria-hidden="true">▲</div>
+
+          <article class="sm-layer" data-perspective="customer">
+            <div class="sm-label">
+              <span class="sm-emoji" aria-hidden="true">🧑‍🤝‍🧑</span>
+              <div>
+                <h3>مشتری (مسافر)</h3>
+                <p>رضایت، جذب مسافر و کاهش شکایات</p>
+              </div>
+            </div>
+            <ul class="sm-objectives">
+              <li>افزایش سهم حمل‌ونقل عمومی از سفرهای شهری</li>
+              <li>کاهش شکایات و ارتقای تجربه سفر</li>
+            </ul>
+          </article>
+          <div class="sm-arrow" aria-hidden="true">▲</div>
+
+          <article class="sm-layer" data-perspective="financial">
+            <div class="sm-label">
+              <span class="sm-emoji" aria-hidden="true">💠</span>
+              <div>
+                <h3>مالی</h3>
+                <p>پایداری مالی، پوشش هزینه و بهره‌وری منابع</p>
+              </div>
+            </div>
+            <ul class="sm-objectives">
+              <li>افزایش نسبت پوشش هزینه‌های عملیاتی</li>
+              <li>کاهش یارانه به ازای هر سفر</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= روش‌شناسی ================= -->
+    <section id="method" class="section section-alt">
+      <div class="container">
+        <header class="section-head">
+          <h2>روش‌شناسی امتیازدهی</h2>
+          <p>فرمول‌های شفاف و قابل بازتولید که در همین صفحه اجرا می‌شوند.</p>
+        </header>
+
+        <div class="method-grid">
+          <article class="panel">
+            <h3>۱. نرمال‌سازی شاخص</h3>
+            <p>
+              هر شاخص بر پایه مقدار هدف خود به عددی بین ۰ تا ۱۰۰ تبدیل می‌شود. برای شاخص‌های
+              «هرچه بیشتر بهتر» و «هرچه کمتر بهتر» فرمول جداگانه به کار می‌رود:
+            </p>
+            <pre class="formula">مطلوب مثبت:  Score = min(100, Value ÷ Target × 100)
+مطلوب منفی:  Score = min(100, Target ÷ Value × 100)</pre>
+            <p class="muted small">مقادیر بالاتر از هدف در سقف ۱۰۰ محدود می‌شوند.</p>
+          </article>
+
+          <article class="panel">
+            <h3>۲. امتیاز منظر و امتیاز کل</h3>
+            <p>
+              امتیاز هر منظر، میانگین ساده شاخص‌های همان منظر است. امتیاز کل برنامه از
+              میانگین وزنی چهار منظر با وزن‌های انتخابی شما به دست می‌آید:
+            </p>
+            <pre class="formula">Perspective = Σ Scoreᵢ ÷ n
+Overall     = Σ (Wₚ × Perspectiveₚ) ÷ Σ Wₚ</pre>
+          </article>
+
+          <article class="panel">
+            <h3>۳. تفسیر امتیاز</h3>
+            <ul class="scale-list">
+              <li><span class="dot dot-a"></span> ۸۵ تا ۱۰۰: عملکرد ممتاز — الگوی قابل تعمیم</li>
+              <li><span class="dot dot-b"></span> ۷۰ تا ۸۵: عملکرد خوب — نیازمند بهبود هدفمند</li>
+              <li><span class="dot dot-c"></span> ۵۵ تا ۷۰: عملکرد متوسط — اولویت‌بندی اقدامات</li>
+              <li><span class="dot dot-d"></span> کمتر از ۵۵: عملکرد ضعیف — مداخله فوری</li>
+            </ul>
+          </article>
+        </div>
+        <p class="disclaimer">
+          ⚠️ داده‌های این صفحه نمونه و آموزشی است و جایگزین سنجش میدانی و آمار رسمی سازمان نیست.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>درباره این ارزیابی</h3>
+        <p>
+          چارچوب ارزیابی برنامه حمل‌ونقل عمومی شهر (اتوبوس، تاکسی، قطار شهری) بر مبنای
+          مدل کارت امتیازی متوازن کاپلان و نورتون، شامل چهار منظر و ۱۲ شاخص کلیدی.
+        </p>
+      </div>
+      <div>
+        <h3>دسترسی سریع</h3>
+        <ul class="footer-links">
+          <li><a href="#bsc">چهار منظر</a></li>
+          <li><a href="#scorecard">کارت امتیازی</a></li>
+          <li><a href="#map">نقشه استراتژی</a></li>
+          <li><a href="#method">روش‌شناسی</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>تماس</h3>
+        <p>📧 bsc@stm-example.ir</p>
+        <p>📞 ۰۲۱-۱۲۳۴۵۶۷۸</p>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>© <span id="year"></span> سامانه ارزیابی BSC حمل‌ونقل عمومی شهر</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

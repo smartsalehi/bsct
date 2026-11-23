@@ -1,0 +1,34 @@
+# ---- سیستم‌عامل و ویرایشگر ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ---- وابستگی‌ها ----
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- ابزارهای موقت و تست ----
+.chrome-profile/
+.chrome-test/
+.test-jsdom/
+_imgtest/
+__pycache__/
+*.pyc
+_test.js
+scratch*
+temp/
+tmp/
+*.TMP
+*~RF*.TMP
+
+# ---- نسخه‌های قدیمی پروژه ----
+01/
+
+# ---- خروجی‌های ساخت ----
+dist/
+build/

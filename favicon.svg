@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BSC">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e7490"/>
+      <stop offset="1" stop-color="#155e75"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+
+  <!-- چهار ربع منظرهای BSC -->
+  <g fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round">
+    <path d="M32 32 V15" stroke="#ffffff"/>
+    <path d="M32 32 H49" stroke="#fbbf24"/>
+    <path d="M32 32 V49" stroke="#ffffff"/>
+    <path d="M32 32 H15" stroke="#ffffff"/>
+  </g>
+
+  <!-- قوس پیشرفت -->
+  <circle cx="32" cy="32" r="21" fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="3.4"/>
+  <circle cx="32" cy="32" r="21" fill="none" stroke="#fbbf24" stroke-width="3.4"
+          stroke-linecap="round" stroke-dasharray="99 132" transform="rotate(-90 32 32)"/>
+
+  <circle cx="32" cy="32" r="4.2" fill="#ffffff"/>
+</svg>
