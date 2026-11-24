@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حفظ جزء ۳۰ قرآن | آموزش تعاملی آیه به آیه</title>
+  <meta name="description" content="حفظ جزء سی‌ام قرآن کریم به‌صورت تعاملی: ۳۷ سوره و ۵۶۴ آیه با متن عثمانی، ترجمهٔ فارسی، تلاوت صوتی، فلش‌کارت، آزمون و جستجو — کاملاً آفلاین.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&family=Amiri+Quran&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════ هدر ═══════════ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="brand" data-nav="home" aria-label="صفحهٔ اصلی">
+        <span class="brand-logo">۳۰</span>
+        <span class="brand-text">
+          <strong>جزء سی‌ام</strong>
+          <small>حفظ قرآن کریم</small>
+        </span>
+      </button>
+
+      <button class="nav-toggle" id="navToggle" aria-label="باز و بسته‌کردن منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="ناوبری اصلی">
+        <button class="nav-item" data-nav="home">خانه</button>
+        <button class="nav-item" data-nav="surahs">سوره‌ها</button>
+        <button class="nav-item" data-nav="flashcards">حفظ</button>
+        <button class="nav-item" data-nav="quiz">آزمون</button>
+        <button class="nav-item" data-nav="search">جستجو</button>
+      </nav>
+
+      <div class="header-progress" title="پیشرفت کلی حفظ">
+        <svg class="ring" viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-bg" cx="18" cy="18" r="15.5"></circle>
+          <circle class="ring-fg" id="ringFg" cx="18" cy="18" r="15.5"></circle>
+        </svg>
+        <span id="headerPct">۰٪</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════ محتوای اصلی ═══════════ -->
+  <main>
+    <div class="container">
+
+      <!-- ── خانه ── -->
+      <section class="view" id="view-home">
+        <div class="hero">
+          <span class="hero-badge">📖 جزء سی‌ام قرآن کریم</span>
+          <h1>جزء ۳۰ را <span class="grad-text">آیه به آیه</span> حفظ کنید</h1>
+          <p class="hero-sub">
+            ۳۷ سوره و ۵۶۴ آیه با متن عثمانی، ترجمهٔ فارسی، تلاوت صوتی، فلش‌کارت و آزمون —
+            پس از بارگذاری اول، کاملاً آفلاین قابل استفاده است.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="btnContinue">ادامهٔ حفظ 🚀</button>
+            <button class="btn btn-secondary btn-lg" data-nav="flashcards">شروع فلش‌کارت 🃏</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon">📜</span>
+            <span class="stat-value" id="statTotal">۵۶۴</span>
+            <span class="stat-label">کل آیات</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">✅</span>
+            <span class="stat-value" id="statLearned">۰</span>
+            <span class="stat-label">حفظ‌شده</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <span class="stat-value" id="statPct">۰٪</span>
+            <span class="stat-label">پیشرفت</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">🔥</span>
+            <span class="stat-value" id="statStreak">۰</span>
+            <span class="stat-label">روز متوالی</span>
+          </div>
+        </div>
+
+        <div class="daily-card" id="dailyCard">
+          <div class="daily-head">
+            <span class="daily-badge">آیهٔ امروز</span>
+            <span class="daily-ref" id="dailyRef"></span>
+          </div>
+          <p class="daily-ar" id="dailyAr"></p>
+          <p class="daily-fa" id="dailyFa"></p>
+          <div class="daily-actions">
+            <button class="btn btn-ghost btn-sm" id="dailyPlay">▶ شنیدن تلاوت</button>
+            <button class="btn btn-secondary btn-sm" id="dailyOpen">مشاهده در سوره</button>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h2>سوره‌های جزء ۳۰</h2>
+          <button class="link-btn" data-nav="surahs">همهٔ ۳۷ سوره ←</button>
+        </div>
+        <div class="surah-grid" id="homeSurahGrid"></div>
+      </section>
+
+      <!-- ── فهرست سوره‌ها ── -->
+      <section class="view" id="view-surahs" hidden>
+        <div class="page-head">
+          <h1>سوره‌های جزء سی‌ام</h1>
+          <p>از سورهٔ نبأ تا سورهٔ ناس — ۳۷ سوره، ۵۶۴ آیه</p>
+        </div>
+
+        <div class="filter-bar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="search" id="surahFilter" placeholder="جستجوی نام سوره…" aria-label="جستجوی نام سوره">
+          </div>
+          <div class="chip-row" id="surahFilterChips">
+            <button class="chip active" data-filter="all">همه</button>
+            <button class="chip" data-filter="todo">حفظ‌نشده</button>
+            <button class="chip" data-filter="done">حفظ‌شده</button>
+          </div>
+        </div>
+
+        <div class="surah-grid" id="surahGrid"></div>
+      </section>
+
+      <!-- ── سوره ── -->
+      <section class="view" id="view-surah" hidden>
+        <button class="back-btn" data-nav="surahs">← بازگشت به فهرست</button>
+
+        <div class="surah-hero">
+          <div class="surah-hero-top">
+            <span class="surah-order" id="surahOrder">۷۸</span>
+            <div class="surah-hero-names">
+              <h1 id="surahTitle">سورهٔ نبأ</h1>
+              <p id="surahSub">خبر بزرگ</p>
+            </div>
+            <span class="surah-hero-ar" id="surahArName"></span>
+          </div>
+          <div class="surah-hero-progress">
+            <div class="bar"><div class="bar-fill" id="surahBar"></div></div>
+            <span id="surahProgressText">۰ از ۴۰ آیه</span>
+          </div>
+        </div>
+
+        <div class="surah-toolbar">
+          <button class="toggle-btn active" id="btnShowFa" aria-pressed="true">
+            <span class="dot"></span> نمایش ترجمه
+          </button>
+          <button class="toggle-btn" id="btnHideAr" aria-pressed="false">
+            <span class="dot"></span> حالت حفظ (پنهان‌کردن متن)
+          </button>
+          <button class="btn btn-ghost btn-sm" id="btnPlaySurah">▶ پخش پیوسته</button>
+          <button class="btn btn-ghost btn-sm" id="btnMarkAll">✓ حفظ همهٔ آیات</button>
+          <select class="reciter-select" id="reciterSelect" aria-label="انتخاب قاری">
+            <option value="ar.alafasy">مشاری العفاسی</option>
+            <option value="ar.husary">محمود خلیل الحصری</option>
+            <option value="ar.minshawi">محمد صدیق منشاوی</option>
+            <option value="ar.mahermuaiqly">ماهر المعیقلی</option>
+            <option value="ar.shaatree">أبوبکر الشاطری</option>
+          </select>
+        </div>
+
+        <p class="bismillah" id="bismillahText">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+        <div class="ayah-list" id="ayahList"></div>
+      </section>
+
+      <!-- ── فلش‌کارت ── -->
+      <section class="view" id="view-flashcards" hidden>
+        <div class="page-head">
+          <h1>فلش‌کارت حفظ</h1>
+          <p>روی کارت بزنید تا ترجمه آشکار شود، سپس وضعیت خود را ثبت کنید.</p>
+        </div>
+
+        <div class="fc-panel">
+          <label class="field">
+            <span>سوره</span>
+            <select id="fcSurah"></select>
+          </label>
+          <label class="field">
+            <span>ترتیب</span>
+            <select id="fcOrder">
+              <option value="natural">به ترتیب مصحف</option>
+              <option value="shuffle">تصادفی</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>فقط نیازمند تمرین</span>
+            <select id="fcOnly">
+              <option value="all">همهٔ آیات</option>
+              <option value="weak">آیات ضعیف</option>
+              <option value="new">حفظ‌نشده‌ها</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" id="btnStartFc">شروع مرور</button>
+        </div>
+
+        <div class="fc-area" id="fcArea" hidden>
+          <div class="fc-counter" id="fcCounter">۱ / ۱۰</div>
+
+          <div class="fc-wrap">
+            <button class="fc-arrow" id="fcPrev" aria-label="قبلی">›</button>
+
+            <div class="card" id="fcCard" tabindex="0" role="button" aria-label="نمایش ترجمه">
+              <div class="card-inner" id="cardInner">
+                <div class="card-face card-front">
+                  <span class="card-ref" id="fcRef"></span>
+                  <p class="card-ar" id="fcAr"></p>
+                  <span class="card-hint">برای دیدن ترجمه بزنید 👆</span>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-ref" id="fcRef2"></span>
+                  <p class="card-fa" id="fcFa"></p>
+                  <p class="card-ar-sm" id="fcAr2"></p>
+                </div>
+              </div>
+            </div>
+
+            <button class="fc-arrow" id="fcNext" aria-label="بعدی">‹</button>
+          </div>
+
+          <div class="fc-actions">
+            <button class="btn btn-warn" id="btnWeak">🔁 نیاز به تمرین</button>
+            <button class="btn btn-ghost" id="btnPlayFc">▶ تلاوت</button>
+            <button class="btn btn-success" id="btnLearned">✓ حفظ کردم</button>
+          </div>
+
+          <div class="fc-progress">
+            <div class="bar"><div class="bar-fill" id="fcBar"></div></div>
+            <span id="fcProgressText"></span>
+          </div>
+
+          <button class="link-btn" id="btnEndFc">پایان مرور</button>
+        </div>
+
+        <div class="empty-state" id="fcEmpty" hidden>
+          <span class="empty-icon">🎉</span>
+          <p>این بخش تمام شد! مرور را تمام کردید.</p>
+          <button class="btn btn-primary" id="btnFcRestart">مرور دوباره</button>
+        </div>
+      </section>
+
+      <!-- ── آزمون ── -->
+      <section class="view" id="view-quiz" hidden>
+        <div class="page-head">
+          <h1>آزمون حفظ</h1>
+          <p>آزمون خود را بسازید و شناخت خود از جزء ۳۰ را بسنجید.</p>
+        </div>
+
+        <div class="quiz-setup" id="quizSetup">
+          <label class="field">
+            <span>محدوده</span>
+            <select id="quizScope">
+              <option value="all">همهٔ جزء ۳۰</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>تعداد سؤال</span>
+            <select id="quizCount">
+              <option value="5">۵ سؤال</option>
+              <option value="10" selected>۱۰ سؤال</option>
+              <option value="15">۱۵ سؤال</option>
+              <option value="20">۲۰ سؤال</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>نوع سؤال</span>
+            <select id="quizType">
+              <option value="fa">ترجمهٔ آیه (عربی ← فارسی)</option>
+              <option value="next">ادامهٔ آیه (آیهٔ بعد چیست؟)</option>
+              <option value="surah">کدام سوره؟</option>
+              <option value="mix">ترکیبی</option>
+            </select>
+          </label>
+          <button class="btn btn-primary btn-lg" id="btnStartQuiz">شروع آزمون 🎯</button>
+        </div>
+
+        <div class="quiz-area" id="quizArea" hidden>
+          <div class="quiz-top">
+            <span class="quiz-counter" id="quizCounter">سؤال ۱ از ۱۰</span>
+            <span class="quiz-score" id="quizScore">امتیاز: ۰</span>
+          </div>
+          <div class="bar"><div class="bar-fill" id="quizBar"></div></div>
+
+          <div class="quiz-card">
+            <span class="quiz-type-badge" id="quizTypeBadge">ترجمهٔ آیه</span>
+            <p class="quiz-ar" id="quizQuestion"></p>
+            <p class="quiz-hint" id="quizHint"></p>
+          </div>
+
+          <div class="quiz-options" id="quizOptions"></div>
+
+          <div class="quiz-feedback" id="quizFeedback" hidden>
+            <p id="quizFeedbackText"></p>
+          </div>
+
+          <div class="quiz-foot">
+            <button class="btn btn-secondary" id="btnQuizQuit">پایان آزمون</button>
+            <button class="btn btn-primary" id="btnQuizNext" hidden>سؤال بعدی →</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" id="quizResult" hidden>
+          <div class="result-ring">
+            <svg viewBox="0 0 36 36" aria-hidden="true">
+              <circle class="ring-bg" cx="18" cy="18" r="15.5"></circle>
+              <circle class="ring-fg" id="resultRing" cx="18" cy="18" r="15.5"></circle>
+            </svg>
+            <span id="resultPct">۰٪</span>
+          </div>
+          <h2 id="resultTitle"></h2>
+          <p id="resultText"></p>
+          <div class="result-actions">
+            <button class="btn btn-primary" id="btnQuizAgain">آزمون دوباره</button>
+            <button class="btn btn-secondary" data-nav="surahs">بازگشت به سوره‌ها</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── جستجو ── -->
+      <section class="view" id="view-search" hidden>
+        <div class="page-head">
+          <h1>جستجو در جزء ۳۰</h1>
+          <p>عبارت را با متن عربی یا ترجمهٔ فارسی جستجو کنید.</p>
+        </div>
+
+        <div class="search-box search-box-lg">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="searchInput" placeholder="مثلاً «والفجر» یا «سپیده‌دم»…" aria-label="جستجو">
+        </div>
+
+        <div class="search-meta" id="searchMeta"></div>
+        <div class="search-results" id="searchResults"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ═══════════ نوار پخش صدا ═══════════ -->
+  <div class="audio-bar" id="audioBar" hidden>
+    <div class="container audio-inner">
+      <button class="audio-btn" id="audioToggle" aria-label="پخش/توقف">⏸</button>
+      <div class="audio-info">
+        <span class="audio-title" id="audioTitle"></span>
+        <div class="audio-bar-progress"><div class="audio-bar-fill" id="audioFill"></div></div>
+      </div>
+      <button class="audio-btn audio-close" id="audioClose" aria-label="بستن">✕</button>
+    </div>
+  </div>
+  <audio id="audioEl" preload="none"></audio>
+
+  <!-- ═══════════ فوتر ═══════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>ساخته‌شده برای دوستداران قرآن 🌙 — دادهٔ متن و ترجمه از <span class="mono">alquran.cloud</span></p>
+      <p class="footer-reset"><button class="link-btn" id="btnResetFooter">پاک‌کردن پیشرفت</button></p>
+    </div>
+  </footer>
+
+  <!-- ═══════════ مودال تأیید پاک‌کردن ═══════════ -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">پاک‌کردن پیشرفت</h3>
+      <p>همهٔ آیات حفظ‌شده، آیات ضعیف، نتایج آزمون‌ها و روزهای متوالی حذف می‌شوند. مطمئن هستید؟</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btnModalCancel">انصراف</button>
+        <button class="btn btn-danger" id="btnModalConfirm">بله، پاک کن</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
