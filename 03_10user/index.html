@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>۵۰۴ واژه ضروری انگلیسی | آموزش تعاملی</title>
+  <meta name="description" content="آموزش تعاملی ۵۰۴ واژه ضروری انگلیسی به فارسی: فلش‌کارت، آزمون، تلفظ و جستجو — پس از بارگذاری اول، کاملاً آفلاین قابل استفاده است.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E">
+  <!-- فونت وزیرمتن (فقط پیشرفت تدریجی؛ در حالت آفلاین از قلم پیش‌فرض استفاده می‌شود) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════ هدر ═══════════ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="brand" data-nav="home" aria-label="صفحهٔ اصلی">
+        <span class="brand-logo">۵۰۴</span>
+        <span class="brand-text">
+          <strong>۵۰۴ واژه</strong>
+          <small>آموزش تعاملی انگلیسی</small>
+        </span>
+      </button>
+
+      <button class="nav-toggle" id="navToggle" aria-label="باز و بسته‌کردن منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="ناوبری اصلی">
+        <button class="nav-item" data-nav="home">خانه</button>
+        <button class="nav-item" data-nav="lessons">درس‌ها</button>
+        <button class="nav-item" data-nav="flashcards">فلش‌کارت</button>
+        <button class="nav-item" data-nav="quiz">آزمون</button>
+        <button class="nav-item" data-nav="search">جستجو</button>
+        <button class="nav-item nav-item-admin" data-nav="admin" hidden>مدیریت</button>
+      </nav>
+
+      <div class="header-user">
+        <span class="user-chip" id="headerUserName" title="">کاربر مهمان</span>
+        <button class="btn btn-ghost btn-sm" id="btnLogout" hidden>خروج</button>
+      </div>
+
+      <div class="header-progress" title="پیشرفت کلی">
+        <svg class="ring" viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-bg" cx="18" cy="18" r="15.5"></circle>
+          <circle class="ring-fg" id="ringFg" cx="18" cy="18" r="15.5"></circle>
+        </svg>
+        <span id="headerPct">۰٪</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════ محتوای اصلی ═══════════ -->
+  <main>
+    <div class="container">
+
+      <!-- ── ورود ── -->
+      <section class="view view-login" id="view-login" hidden>
+        <div class="login-card">
+          <div class="login-head">
+            <span class="login-logo">🔐</span>
+            <h1>ورود به ۵۰۴ واژه</h1>
+            <p>کاربر خود را انتخاب کنید و رمز عبور را وارد کنید.</p>
+          </div>
+          <div class="field">
+            <label for="loginUserSelect">کاربر</label>
+            <select id="loginUserSelect"></select>
+          </div>
+          <div class="field">
+            <label for="loginPass">رمز عبور</label>
+            <input type="password" id="loginPass" autocomplete="current-password">
+          </div>
+          <p class="login-error" id="loginError" hidden></p>
+          <button class="btn btn-primary btn-lg" id="btnLogin" style="width:100%">ورود 🚀</button>
+          <p class="login-hint">کاربران عادی: رمز ۱۲۳۴۵۶ — مدیر: رمز admin123</p>
+        </div>
+      </section>
+
+      <!-- ── خانه ── -->
+      <section class="view" id="view-home">
+        <div class="hero">
+          <span class="hero-badge">📚 یادگیری روزانهٔ واژه</span>
+          <h1>با <span class="grad-text">۵۰۴ واژه</span>، انگلیسی را روان صحبت کنید</h1>
+          <p class="hero-sub">۴۲ درسِ ۱۲ کلمه‌ای به همراه فلش‌کارت، آزمون و تلفظ — برای تقویت دایرهٔ واژگان شما.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="btnContinue">ادامهٔ یادگیری 🚀</button>
+            <button class="btn btn-secondary btn-lg" data-nav="flashcards">شروع فلش‌کارت 🃏</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon">📖</span>
+            <span class="stat-value" id="statTotal">۵۰۴</span>
+            <span class="stat-label">کل واژه‌ها</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">✅</span>
+            <span class="stat-value" id="statLearned">۰</span>
+            <span class="stat-label">آموخته‌شده</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <span class="stat-value" id="statPct">۰٪</span>
+            <span class="stat-label">پیشرفت</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">🔥</span>
+            <span class="stat-value" id="statStreak">۰</span>
+            <span class="stat-label">روز متوالی</span>
+          </div>
+        </div>
+
+        <div class="home-cols">
+          <div class="panel next-lesson">
+            <div class="next-lesson-info">
+              <div class="next-lesson-num" id="nextLessonNum">درس ۱</div>
+              <p id="nextLessonText">برای شروع، این درس را باز کنید.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">🤔 اینجا چه کار می‌کنیم؟</h2>
+            <ol class="how-list">
+              <li>در <b>درس‌ها</b> هر کلمه را بخوانید و با دکمهٔ «✓» آن را آموخته‌شده علامت بزنید.</li>
+              <li>با <b>فلش‌کارت</b> کلمه‌ها را مرور و تلفظ کنید.</li>
+              <li>در <b>آزمون</b> دانش خود را بسنجید و نتیجه را مرور کنید.</li>
+              <li>با <b>جستجو</b> هر کلمه را سریع پیدا کنید (انگلیسی یا فارسی).</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── فهرست درس‌ها ── -->
+      <section class="view" id="view-lessons" hidden>
+        <div class="view-head">
+          <h1>درس‌ها</h1>
+          <p>۴۲ درس، هر درس ۱۲ کلمه — روی هر درس کلیک کنید.</p>
+        </div>
+        <div class="lessons-grid" id="lessonsGrid"></div>
+      </section>
+
+      <!-- ── جزئیات یک درس ── -->
+      <section class="view" id="view-lesson" hidden>
+        <button class="btn btn-ghost btn-back" id="btnBackLessons">→ بازگشت به درس‌ها</button>
+        <div class="lesson-head">
+          <div>
+            <h1 id="lessonTitle">درس ۱</h1>
+            <p id="lessonSubtitle">۱۲ کلمه</p>
+          </div>
+          <div class="lesson-head-actions">
+            <button class="btn btn-secondary" id="btnLessonFlashcards">🃏 فلش‌کارت</button>
+            <button class="btn btn-primary" id="btnLessonQuiz">📝 آزمون این درس</button>
+          </div>
+        </div>
+        <div class="word-list" id="wordList"></div>
+      </section>
+
+      <!-- ── فلش‌کارت ── -->
+      <section class="view" id="view-flashcards" hidden>
+        <div class="view-head">
+          <h1>فلش‌کارت</h1>
+          <p>روی کارت کلیک کنید یا Enter بزنید تا معنی را ببینید؛ جهت‌های چپ و راست هم کار می‌کنند.</p>
+        </div>
+
+        <div class="fc-controls">
+          <div class="field">
+            <label for="fcLessonSelect">محدودهٔ درس</label>
+            <select id="fcLessonSelect">
+              <option value="0">همهٔ کلمه‌ها (۵۰۴)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fcModeSelect">حالت</label>
+            <select id="fcModeSelect">
+              <option value="all">همهٔ کلمه‌ها</option>
+              <option value="unlearned">یادگرفته‌نشده</option>
+              <option value="learned">یادگرفته‌شده</option>
+              <option value="weak">نیاز به تمرین</option>
+            </select>
+          </div>
+          <label class="checkbox-field">
+            <input type="checkbox" id="fcShuffle"> به‌هم‌ریختن کارت‌ها
+          </label>
+        </div>
+
+        <div class="fc-area" id="fcArea">
+          <button class="fc-arrow" id="fcPrev" aria-label="کارت قبلی">→</button>
+          <div class="fc-stage">
+            <div class="fc-progress">
+              <span id="fcPos">۱ / ۱۲</span>
+              <div class="fc-bar"><div id="fcBar"></div></div>
+              <span id="fcLessonTag">درس ۱</span>
+            </div>
+
+            <div class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="چرخاندن کارت برای دیدن معنی">
+              <div class="card-inner">
+                <div class="card-face card-front">
+                  <p class="card-word" id="fcWord">…</p>
+                  <button class="btn-speak" id="fcSpeak" title="تلفظ کلمه">🔊</button>
+                  <p class="card-hint" id="fcFlipHint">برای دیدن معنی، کلیک کنید یا Enter بزنید</p>
+                </div>
+                <div class="card-face card-back">
+                  <p class="card-meaning" id="fcMeaning">…</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="fc-actions">
+              <button class="btn btn-secondary" id="fcLearned">✓ یاد گرفتم</button>
+              <button class="btn btn-wrong" id="fcWeak">🔁 نیاز به تمرین</button>
+            </div>
+          </div>
+          <button class="fc-arrow" id="fcNext" aria-label="کارت بعدی">←</button>
+        </div>
+
+        <div class="fc-empty" id="fcEmpty" hidden>
+          <p>در این حالت کارتی وجود ندارد؛ چند کلمه را «یاد گرفتم» یا «نیاز به تمرین» علامت بزنید.</p>
+        </div>
+      </section>
+
+      <!-- ── آزمون ── -->
+      <section class="view" id="view-quiz" hidden>
+        <div class="view-head">
+          <h1>آزمون</h1>
+          <p>دانش واژه‌های خود را بسنجید؛ با کلیدهای ۱ تا ۴ هم می‌توانید پاسخ دهید.</p>
+        </div>
+
+        <div class="panel quiz-setup" id="quizSetup">
+          <h2 class="panel-title">تنظیمات آزمون</h2>
+          <div class="quiz-setup-grid">
+            <div class="field">
+              <label for="quizScope">محدودهٔ درس</label>
+              <select id="quizScope">
+                <option value="0">همهٔ کلمه‌ها (۵۰۴)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="quizDir">جهت سؤال</label>
+              <select id="quizDir">
+                <option value="en2fa">انگلیسی → فارسی</option>
+                <option value="fa2en">فارسی → انگلیسی</option>
+                <option value="mixed">ترکیبی</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="quizCount">تعداد سؤال</label>
+              <input type="number" id="quizCount" value="10" min="1" max="504">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg" id="btnStartQuiz" style="width:100%">شروع آزمون 🚀</button>
+        </div>
+
+        <div class="quiz-run" id="quizRun" hidden>
+          <div class="quiz-top">
+            <span class="quiz-count" id="quizCountLabel">سؤال ۱ از ۱۰</span>
+            <div style="flex:1;height:8px;background:#e3e6f2;border-radius:99px;overflow:hidden">
+              <div id="quizBar" style="height:100%;width:0;background:linear-gradient(90deg,var(--primary),#8b7bff);border-radius:99px;transition:width .35s ease"></div>
+            </div>
+            <span class="quiz-score" id="quizScoreLabel">۰ امتیاز</span>
+          </div>
+
+          <div class="quiz-question" id="quizQuestion"></div>
+          <div class="quiz-options" id="quizOptions"></div>
+          <div class="quiz-feedback" id="quizFeedback" hidden></div>
+          <button class="btn btn-primary btn-lg" id="btnQuizNext" hidden>سؤال بعدی ←</button>
+        </div>
+
+        <div class="quiz-result" id="quizResult" hidden>
+          <div class="result-card">
+            <div class="result-emoji" id="resultEmoji">🏆</div>
+            <h2 id="resultTitle">فوق‌العاده!</h2>
+            <p class="result-score" id="resultScore">۱۰ از ۱۰</p>
+            <p class="result-percent" id="resultPercent">۱۰۰٪ پاسخ درست</p>
+            <div class="result-actions">
+              <button class="btn btn-primary" id="btnQuizAgain">آزمون دوباره 🔄</button>
+              <button class="btn btn-secondary" id="btnQuizReview">مرور پاسخ‌ها 📋</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── جستجو ── -->
+      <section class="view" id="view-search" hidden>
+        <div class="view-head">
+          <h1>جستجو</h1>
+          <p>جستجو در ۵۰۴ واژه — به انگلیسی یا فارسی.</p>
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="searchInput" placeholder="مثلاً abandon یا «رها کردن»" autocomplete="off">
+          <button class="btn btn-ghost" id="btnSearchClear" hidden>✕ پاک‌کردن</button>
+        </div>
+
+        <p class="search-stats" id="searchStats"></p>
+        <div class="search-results" id="searchResults"></div>
+        <div class="fc-empty" id="searchEmpty" hidden>
+          <p>چیزی پیدا نشد؛ املای کلمه را بررسی کنید.</p>
+        </div>
+      </section>
+
+      <!-- ── مدیریت کاربران (فقط مدیر) ── -->
+      <section class="view" id="view-admin" hidden>
+        <div class="view-head">
+          <h1>مدیریت کاربران</h1>
+          <p>افزودن، ورود، بازنشانی پیشرفت و حذف کاربران — پیشرفت هر کاربر جداگانه ذخیره می‌شود.</p>
+        </div>
+
+        <div class="admin-stats" id="adminStats"></div>
+
+        <div class="panel admin-add">
+          <h2 class="panel-title">➕ افزودن کاربر جدید</h2>
+          <div class="admin-add-grid">
+            <div class="field">
+              <label for="adminNewName">نام کاربر</label>
+              <input type="text" id="adminNewName" placeholder="مثلاً سعید محمدی">
+            </div>
+            <div class="field">
+              <label for="adminNewUser">نام کاربری (انگلیسی)</label>
+              <input type="text" id="adminNewUser" placeholder="مثلاً saeed" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="adminNewPass">رمز عبور</label>
+              <input type="text" id="adminNewPass" placeholder="حداقل ۴ نویسه" autocomplete="off">
+            </div>
+            <button class="btn btn-primary" id="btnAdminAddUser">افزودن</button>
+          </div>
+          <p class="admin-msg" id="adminNewMsg" hidden></p>
+        </div>
+
+        <div class="panel admin-table-panel">
+          <div class="admin-table-head">
+            <h2 class="panel-title">👥 کاربران برنامه</h2>
+            <button class="btn btn-ghost btn-sm" id="btnAdminRefresh">🔄 بازخوانی</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>نام</th>
+                  <th>نقش</th>
+                  <th>واژه‌های آموخته</th>
+                  <th>روز متوالی</th>
+                  <th>عملیات</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ═══════════ فوتر ═══════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>ساخته‌شده با ♥ برای یادگیری واژه‌های ضروری انگلیسی</p>
+      <p class="footer-note">دادهٔ واژه‌ها از پروژهٔ متن‌باز 504-words — github.com/haji4ref/504-words</p>
+      <p class="footer-reset"><button class="link-btn" id="btnResetFooter">پاک‌کردن پیشرفت</button></p>
+    </div>
+  </footer>
+
+  <!-- ═══════════ مودال تأیید پاک‌کردن ═══════════ -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">پاک‌کردن پیشرفت</h3>
+      <p>همهٔ کلمه‌های آموخته‌شده، نتایج آزمون‌ها و روزهای متوالی حذف می‌شوند. مطمئن هستید؟</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btnModalCancel">انصراف</button>
+        <button class="btn btn-danger" id="btnModalConfirm">بله، پاک کن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ابتدا داده، سپس منطق برنامه -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
