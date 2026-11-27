@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جزئیات محصول | خانه هوشمند مشهد</title>
+<meta name="description" content="مشخصات فنی و ویژگی‌های محصولات خانه هوشمند کوباکو.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="products">
+<header id="site-header" class="site-header"></header>
+
+<main id="app">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs" id="crumbs"></div>
+      <div id="head"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="article-shell">
+        <div id="content"></div>
+        <aside id="side"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="related-section">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">محصولات مرتبط</span><h2>شاید این‌ها هم به کارتان بیاید</h2></div></div>
+      <div class="grid grid--3" id="related"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/js/core.js"></script>
+<script>
+App.boot((site) => {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get("slug") || App.sorted(site.products)[0]?.slug;
+  const p = site.products.find((x) => x.slug === slug);
+
+  if (!p) {
+    document.getElementById("head").innerHTML = `<h1>محصول یافت نشد</h1><p>این محصول حذف شده یا آدرس اشتباه است.</p>
+      <a class="btn btn--primary" href="products.html" style="margin-top:16px">بازگشت به فهرست محصولات</a>`;
+    document.querySelector(".section").style.display = "none";
+    document.getElementById("related-section").style.display = "none";
+    return;
+  }
+
+  document.title = `${p.title} | خانه هوشمند مشهد`;
+  App.setMeta("description", p.summary);
+
+  document.getElementById("crumbs").innerHTML = `
+    <a href="index.html">خانه</a><span>/</span>
+    <a href="products.html">محصولات کوباکو</a><span>/</span>
+    <span>${App.escapeHtml(p.title)}</span>`;
+
+  document.getElementById("head").innerHTML = `
+    <span class="eyebrow">${App.escapeHtml(p.category)}</span>
+    <h1>${App.escapeHtml(p.title)}</h1>
+    <p>${App.escapeHtml(p.summary)}</p>`;
+
+  document.getElementById("content").innerHTML = `
+    <img class="article-cover ${App.isPhoto(p.image) ? "is-photo" : "is-cover"}" src="${App.asset(p.image)}" alt="${App.escapeHtml(p.title)}">
+    <div class="prose">
+      <p>${App.escapeHtml(p.description)}</p>
+      <h2>ویژگی‌های کلیدی</h2>
+      <ul>${(p.features || []).map((f) => `<li>${App.escapeHtml(f)}</li>`).join("")}</ul>
+      <h2>مشخصات فنی</h2>
+      <div class="grid grid--2" style="gap:12px">
+        ${(p.specs || []).map((sp) => `
+          <div class="info-item" style="padding:14px 16px">
+            <div>
+              <b style="font-size:.8rem;color:var(--muted)">${App.escapeHtml(sp.k)}</b>
+              <p style="margin:0;color:var(--text)">${App.escapeHtml(sp.v)}</p>
+            </div>
+          </div>`).join("")}
+      </div>
+      <hr>
+      <h2>این محصول در پروژه شما</h2>
+      <p>کارشناسان ما پیش از خرید، نیاز واقعی پروژه شما را بررسی می‌کنند تا نه کمتر و نه بیشتر از نیاز، تجهیز خریداری شود. برای دریافت برآورد قیمت و زمان اجرا، درخواست مشاوره ثبت کنید.</p>
+    </div>`;
+
+  document.getElementById("side").innerHTML = `
+    <div class="side-card">
+      <h4>${App.icon("phone")} مشاوره و قیمت</h4>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px">${App.escapeHtml(site.settings.tagline)}</p>
+      <a class="btn btn--primary btn--block" href="contact.html">ثبت درخواست</a>
+      <a class="btn btn--ghost btn--block" style="margin-top:8px" href="tel:${App.escapeHtml(site.settings.phoneRaw)}">${App.escapeHtml(site.settings.phone)}</a>
+    </div>
+    <div class="side-card">
+      <h4>دسته‌بندی‌ها</h4>
+      <div class="toc-list">
+        ${Array.from(new Set(site.products.map((x) => x.category))).map((c) => `<a href="products.html">${App.escapeHtml(c)}</a>`).join("")}
+      </div>
+    </div>
+    <div class="side-card">
+      <h4>عوامل اجرایی</h4>
+      ${App.sorted(site.agents).slice(0, 3).map((a) => `
+        <div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)">
+          <img src="${App.asset(a.photo)}" alt="" style="width:38px;height:38px;border-radius:50%;object-fit:cover">
+          <div style="line-height:1.5"><b style="font-size:.85rem">${App.escapeHtml(a.name)}</b><br><small style="color:var(--muted);font-size:.75rem">${App.escapeHtml(a.role)}</small></div>
+        </div>`).join("")}
+      <a class="btn btn--ghost btn--sm btn--block" style="margin-top:12px" href="agents.html">همه اعضا</a>
+    </div>`;
+
+  const related = App.sorted(site.products).filter((x) => x.slug !== p.slug).slice(0, 3);
+  document.getElementById("related").innerHTML = related.map(App.productCard).join("");
+  App.reveal();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>محصولات کوباکو | خانه هوشمند مشهد</title>
+<meta name="description" content="فهرست کامل محصولات خانه هوشمند کوباکو: سیم‌کشی هوشمند، ماژول تابلویی، کلید لمسی، پنل لمسی، آیفون تصویری، پرده برقی، سیستم صوتی و حسگرها.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="products">
+<header id="site-header" class="site-header"></header>
+
+<main id="app">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">خانه</a><span>/</span><span>محصولات کوباکو</span></div>
+      <span class="eyebrow">محصولات</span>
+      <h1>تجهیزات خانه هوشمند <span class="grad-text">کوباکو</span></h1>
+      <p>همه اجزای یک خانه هوشمند، از زیرساخت سیم‌کشی تا رابط کاربری و تجهیزات رفاهی؛ با کیفیت تولید داخل و پشتیبانی نمایندگی مشهد.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="grid grid--3" id="product-grid"></div>
+      <div id="empty" style="display:none" class="alert alert--err">محصولی در این دسته‌بندی یافت نشد.</div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>نمی‌دانید کدام محصول برای خانه شما مناسب است؟</h2>
+          <p>کارشناسان ما بر اساس متراژ، مرحله ساخت و بودجه شما، فهرست دقیق تجهیزات لازم را آماده می‌کنند.</p>
+        </div>
+        <a class="btn btn--gold" href="contact.html">مشاوره تخصصی رایگان</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/js/core.js"></script>
+<script>
+App.boot((site) => {
+  const products = App.sorted(site.products);
+  const cats = ["همه", ...Array.from(new Set(products.map((p) => p.category)))];
+  const state = { cat: "همه", q: "" };
+
+  document.getElementById("filters").innerHTML =
+    cats.map((c) => `<button class="filter-btn ${c === "همه" ? "active" : ""}" data-cat="${App.escapeHtml(c)}">${App.escapeHtml(c)}</button>`).join("") +
+    `<input class="input" id="search" placeholder="جستجو در محصولات…" style="max-width:260px;margin-inline-start:auto" />`;
+
+  const grid = document.getElementById("product-grid");
+  const empty = document.getElementById("empty");
+
+  function render() {
+    const list = products.filter(
+      (p) =>
+        (state.cat === "همه" || p.category === state.cat) &&
+        (!state.q || (p.title + p.summary + p.category).includes(state.q))
+    );
+    grid.innerHTML = list.map(App.productCard).join("");
+    empty.style.display = list.length ? "none" : "block";
+    App.reveal();
+  }
+
+  document.getElementById("filters").addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    App.$$(".filter-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.cat = btn.dataset.cat;
+    render();
+  });
+
+  document.getElementById("search").addEventListener("input", (e) => {
+    state.q = e.target.value.trim();
+    render();
+  });
+
+  render();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>گالری تصاویر | خانه هوشمند مشهد</title>
+<meta name="description" content="گالری پروژه‌های اجراشده خانه هوشمند مشهد: ویلا، آپارتمان، برج، هتل، نمایشگاه و دوره‌های آموزشی.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="gallery">
+<header id="site-header" class="site-header"></header>
+
+<main id="app">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">خانه</a><span>/</span><span>گالری تصاویر</span></div>
+      <span class="eyebrow eyebrow--gold">گالری</span>
+      <h1>گالری پروژه‌های <span class="grad-text">اجراشده</span></h1>
+      <p>بخشی از پروژه‌هایی که تیم ما در مشهد و حومه اجرا کرده است: از تابلوهای برق هوشمند تا لابی برج و سوئیت هتلی. برای دیدن هر تصویر در اندازه بزرگ، روی آن کلیک کنید.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+      <div id="empty" class="alert alert--err" style="display:none">تصویری در این دسته‌بندی موجود نیست.</div>
+      <p class="form-note" style="margin-top:22px">تعداد تصاویر: <b id="count">۰</b></p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>پروژه شما می‌تواند تصویر بعدی این گالری باشد</h2>
+          <p>برای بازدید از نمونه‌کارهای نزدیک به پروژه خود یا هماهنگی بازدید حضوری، با ما تماس بگیرید.</p>
+        </div>
+        <a class="btn btn--gold" href="contact.html">هماهنگی بازدید</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/js/core.js"></script>
+<script>
+App.boot((site) => {
+  const items = App.sorted(site.gallery);
+  const cats = ["همه", ...Array.from(new Set(items.map((g) => g.category)))];
+  let active = "همه";
+  const grid = document.getElementById("gallery-grid");
+  const empty = document.getElementById("empty");
+  const count = document.getElementById("count");
+
+  document.getElementById("filters").innerHTML = cats
+    .map((c) => `<button class="filter-btn ${c === "همه" ? "active" : ""}" data-cat="${App.escapeHtml(c)}">${App.escapeHtml(c)}</button>`)
+    .join("");
+
+  function render() {
+    const list = items.filter((g) => active === "همه" || g.category === active);
+    grid.innerHTML = list.map(App.galleryItem).join("");
+    empty.style.display = list.length ? "none" : "block";
+    count.textContent = App.faDigits(list.length);
+    App.reveal();
+  }
+
+  document.getElementById("filters").addEventListener("click", (e) => {
+    const b = e.target.closest(".filter-btn");
+    if (!b) return;
+    App.$$(".filter-btn").forEach((x) => x.classList.remove("active"));
+    b.classList.add("active");
+    active = b.dataset.cat;
+    render();
+  });
+
+  render();
+});
+</script>
+</body>
+</html>

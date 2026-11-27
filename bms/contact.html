@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تماس با ما | خانه هوشمند مشهد</title>
+<meta name="description" content="آدرس، تلفن و راه‌های تماس با نمایندگی کوباکو در مشهد؛ ثبت درخواست مشاوره و بازدید پروژه.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="contact">
+<header id="site-header" class="site-header"></header>
+
+<main id="app">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">خانه</a><span>/</span><span>تماس با ما</span></div>
+      <span class="eyebrow">ارتباط با ما</span>
+      <h1>درخواست مشاوره و <span class="grad-text">بازدید پروژه</span></h1>
+      <p>فرم زیر را پر کنید یا مستقیم تماس بگیرید. در روزهای کاری، پاسخ اولیه کمتر از چند ساعت کاری زمان می‌برد.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="info-list" id="info"></div>
+          <div class="map-shell" style="margin-top:18px">
+            <iframe title="نقشه دفتر مشهد" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://maps.google.com/maps?q=36.3121,59.5498&z=14&hl=fa&output=embed"></iframe>
+          </div>
+        </div>
+        <div class="card" style="padding:26px">
+          <h2 style="font-size:1.2rem;margin-bottom:6px">فرم درخواست</h2>
+          <p style="color:var(--muted);font-size:.86rem">فیلدهای ستاره‌دار الزامی هستند.</p>
+          <form id="contact-form" class="form-grid" style="margin-top:18px">
+            <div class="field"><label for="name">نام و نام خانوادگی *</label><input class="input" id="name" name="name" required autocomplete="name"></div>
+            <div class="field"><label for="phone">شماره تماس *</label><input class="input" id="phone" name="phone" required inputmode="tel" placeholder="۰۹۱۲۳۴۵۶۷۸۹" autocomplete="tel"></div>
+            <div class="field"><label for="email">ایمیل</label><input class="input" id="email" name="email" type="email" dir="ltr" autocomplete="email"></div>
+            <div class="field"><label for="subject">موضوع</label>
+              <select class="select" id="subject" name="subject">
+                <option>مشاوره خرید محصولات</option>
+                <option>اجرای خانه هوشمند</option>
+                <option>بازدید از پروژه</option>
+                <option>پشتیبانی و خدمات پس از فروش</option>
+                <option>همکاری و نمایندگی</option>
+              </select>
+            </div>
+            <div class="field full"><label for="message">متن پیام *</label><textarea class="textarea" id="message" name="message" required placeholder="متراژ، مرحله ساخت و نیازهای خود را بنویسید…"></textarea></div>
+            <div class="field full">
+              <div class="alert alert--ok" id="ok">پیام شما ثبت شد ✅</div>
+              <div class="alert alert--err" id="err">ارسال نشد؛ لطفاً دوباره تلاش کنید.</div>
+            </div>
+            <div class="field full">
+              <button class="btn btn--primary btn--block" type="submit" id="submit">ارسال درخواست</button>
+              <small class="form-note">اطلاعات شما فقط برای پاسخ به همین درخواست استفاده می‌شود.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">عوامل اجرایی</span><h2>تماس مستقیم با تیم</h2></div><a class="btn btn--ghost" href="agents.html">معرفی کامل</a></div>
+      <div class="grid grid--4" id="agent-grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/js/core.js"></script>
+<script>
+App.boot((site) => {
+  const s = site.settings;
+  document.getElementById("info").innerHTML = [
+    ["pin", "آدرس دفتر", s.address],
+    ["phone", "تلفن", s.phone, `tel:${s.phoneRaw}`],
+    ["mail", "ایمیل", s.email, `mailto:${s.email}`],
+    ["clock", "ساعت کاری", s.hours],
+    ["whatsapp", "واتس‌اپ", s.phone, `https://wa.me/${String(s.whatsapp || "").replace(/[^0-9]/g, "")}`],
+  ].map(([i, label, val, href]) => `
+    <div class="info-item">
+      <span class="ico">${App.icon(i)}</span>
+      <div>
+        <b>${label}</b>
+        ${href ? `<a href="${href}" dir="ltr" style="color:var(--text-soft);font-size:.86rem">${App.escapeHtml(val)}</a>` : `<p>${App.escapeHtml(val)}</p>`}
+      </div>
+    </div>`).join("");
+
+  document.getElementById("agent-grid").innerHTML = App.sorted(site.agents).slice(0, 4).map(App.agentCard).join("");
+
+  const form = document.getElementById("contact-form");
+  const ok = document.getElementById("ok");
+  const err = document.getElementById("err");
+  const btn = document.getElementById("submit");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    ok.classList.remove("show");
+    err.classList.remove("show");
+    btn.disabled = true;
+    btn.textContent = "در حال ارسال…";
+    const payload = Object.fromEntries(new FormData(form).entries());
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "خطا در ارسال");
+      ok.textContent = data.message || "پیام شما ثبت شد ✅";
+      ok.classList.add("show");
+      form.reset();
+      App.toast("درخواست شما ثبت شد. به‌زودی تماس می‌گیریم.");
+    } catch (ex) {
+      err.textContent = navigator.onLine
+        ? `ارسال نشد: ${ex.message}`
+        : "اتصال اینترنت قطع است یا سرور سایت اجرا نشده. برای ارسال فرم، سرور را با دستور node server.js اجرا کنید.";
+      err.classList.add("show");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "ارسال درخواست";
+    }
+  });
+
+  App.reveal();
+});
+</script>
+</body>
+</html>

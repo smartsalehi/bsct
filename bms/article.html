@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مقاله | خانه هوشمند مشهد</title>
+<meta name="description" content="مقالات و آموزش‌های خانه هوشمند مشهد">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="articles">
+<header id="site-header" class="site-header"></header>
+
+<main id="app">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs" id="crumbs"></div>
+      <div id="head"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="article-shell">
+        <article id="content"></article>
+        <aside id="side"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">بیشتر بخوانید</span><h2>مقالات مرتبط</h2></div></div>
+      <div class="grid grid--3" id="related"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/js/core.js"></script>
+<script>
+App.boot((site) => {
+  const slug = new URLSearchParams(location.search).get("slug") || site.articles[0]?.slug;
+  const a = site.articles.find((x) => x.slug === slug);
+
+  if (!a) {
+    document.getElementById("head").innerHTML = `<h1>مقاله یافت نشد</h1><p>این مقاله حذف شده یا آدرس آن اشتباه است.</p>
+      <a class="btn btn--primary" href="articles.html" style="margin-top:16px">بازگشت به مقالات</a>`;
+    document.querySelector(".article-shell").closest(".section").style.display = "none";
+    document.querySelectorAll(".section")[1].style.display = "none";
+    return;
+  }
+
+  document.title = `${a.title} | خانه هوشمند مشهد`;
+  App.setMeta("description", a.excerpt);
+
+  document.getElementById("crumbs").innerHTML = `
+    <a href="index.html">خانه</a><span>/</span>
+    <a href="articles.html">مقالات و آموزش‌ها</a><span>/</span>
+    <span>${App.escapeHtml(a.category)}</span>`;
+
+  document.getElementById("head").innerHTML = `
+    <span class="eyebrow">${App.escapeHtml(a.category)}</span>
+    <h1>${App.escapeHtml(a.title)}</h1>
+    <div class="meta" style="margin-top:6px">
+      <span>${App.icon("users")}${App.escapeHtml(a.author)}</span>
+      <span>${App.icon("calendar")}${App.escapeHtml(a.date)}</span>
+      <span>${App.icon("clock")}${App.escapeHtml(a.readTime)}</span>
+    </div>`;
+
+  const headings = App.extractHeadings(a.content);
+  let html = App.renderMarkdown(a.content);
+  // assign ids for TOC anchors
+  let i = 0;
+  html = html.replace(/<h[23]>/g, (m) => `<h${m[2]} id="h-${i++}">`);
+
+  document.getElementById("content").innerHTML = `
+    <img class="article-cover" src="${App.asset(a.image)}" alt="${App.escapeHtml(a.title)}">
+    <div class="prose">${html}</div>
+    <div class="side-card" style="margin-top:24px">
+      <h4>برچسب‌ها</h4>
+      <div class="agent-badges" style="justify-content:flex-start">
+        ${(a.tags || []).map((t) => `<span class="tag">${App.icon("tag")} ${App.escapeHtml(t)}</span>`).join("")}
+      </div>
+    </div>`;
+
+  document.getElementById("side").innerHTML = `
+    ${headings.length ? `<div class="side-card"><h4>در این مقاله</h4><div class="toc-list">
+      ${headings.map((h, idx) => `<a href="#h-${idx}">${App.escapeHtml(h.text)}</a>`).join("")}
+    </div></div>` : ""}
+    <div class="side-card">
+      <h4>درخواست مشاوره</h4>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px">سؤال شما درباره این موضوع را کارشناسان ما پاسخ می‌دهند.</p>
+      <a class="btn btn--primary btn--block" href="contact.html">تماس با ما</a>
+    </div>
+    <div class="side-card">
+      <h4>مقالات دیگر</h4>
+      <div class="toc-list">
+        ${site.articles.filter((x) => x.slug !== a.slug).slice(0, 5).map((x) => `<a href="article.html?slug=${encodeURIComponent(x.slug)}">${App.escapeHtml(x.title)}</a>`).join("")}
+      </div>
+    </div>`;
+
+  document.getElementById("related").innerHTML = site.articles.filter((x) => x.slug !== a.slug).slice(0, 3).map(App.articleCard).join("");
+  App.reveal();
+});
+</script>
+</body>
+</html>

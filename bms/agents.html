@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>عوامل اجرایی | خانه هوشمند مشهد</title>
+<meta name="description" content="معرفی عوامل اجرایی خانه هوشمند مشهد: مهندس صالحی نماینده فروش، ابراهیم بسک آبادی و تیم فنی، نصب و پشتیبانی کوباکو.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="agents">
+<header id="site-header" class="site-header"></header>
+
+<main id="app">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">خانه</a><span>/</span><span>عوامل اجرایی</span></div>
+      <span class="eyebrow">تیم ما</span>
+      <h1>عوامل اجرایی <span class="grad-text">خانه هوشمند مشهد</span></h1>
+      <p>هر پروژه یک مسئول مشخص دارد. در جدول زیر، نقش هر همکار و راه تماس مستقیم با او آمده است تا بدانید در هر مرحله با چه کسی در ارتباط باشید.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="grid grid--4" id="agent-grid"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow eyebrow--gold">ساختار اجرایی</span>
+          <h2>مسیر پروژه شما، از تماس اول تا تحویل</h2>
+        </div>
+      </div>
+      <div class="grid grid--4" id="steps"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>می‌خواهید با یکی از همکاران ما صحبت کنید؟</h2>
+          <p>درخواست خود را ثبت کنید تا در همان روز کاری، مسئول مربوطه با شما تماس بگیرد.</p>
+        </div>
+        <a class="btn btn--gold" href="contact.html">ثبت درخواست تماس</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/js/core.js"></script>
+<script>
+App.boot((site) => {
+  const agents = App.sorted(site.agents);
+  const roles = ["همه", "فروش و مشاوره", "اجرا و نصب", "پشتیبانی و آموزش"];
+  const grid = document.getElementById("agent-grid");
+  let active = "همه";
+
+  const roleBucket = (r) => {
+    const t = (r || "").toString();
+    if (/فروش|مشاوره|بازاریابی/.test(t)) return "فروش و مشاوره";
+    if (/اجرا|نصب|سیم|تابلو|فنی|برنامه/.test(t)) return "اجرا و نصب";
+    return "پشتیبانی و آموزش";
+  };
+
+  document.getElementById("filters").innerHTML = roles
+    .map((r) => `<button class="filter-btn ${r === "همه" ? "active" : ""}" data-role="${r}">${r}</button>`)
+    .join("");
+
+  function render() {
+    const list = agents.filter((a) => active === "همه" || roleBucket(a.role) === active);
+    grid.innerHTML = list.map(App.agentCard).join("");
+    App.reveal();
+  }
+
+  document.getElementById("filters").addEventListener("click", (e) => {
+    const b = e.target.closest(".filter-btn");
+    if (!b) return;
+    App.$$(".filter-btn").forEach((x) => x.classList.remove("active"));
+    b.classList.add("active");
+    active = b.dataset.role;
+    render();
+  });
+
+  document.getElementById("steps").innerHTML = [
+    ["phone", "۱. تماس و مشاوره", "نیاز اولیه و مرحله ساخت پروژه را بررسی می‌کنیم."],
+    ["layers", "۲. طراحی و پیشنهاد", "فهرست تجهیزات، سناریوها و برآورد هزینه ارائه می‌شود."],
+    ["bolt", "۳. اجرا و نصب", "سیم‌کشی، نصب تابلو و کلیدها با نظارت سرپرست فنی."],
+    ["shield", "۴. تحویل و پشتیبانی", "آموزش کاربر، تحویل مدارک و فعال‌سازی گارانتی."],
+  ].map(([i, t, d]) => `<div class="feature reveal"><div class="ico">${App.icon(i)}</div><h3>${t}</h3><p>${d}</p></div>`).join("");
+
+  render();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پنل مدیریت | خانه هوشمند مشهد</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body data-page="admin">
+
+<!-- ======================= LOGIN ======================= -->
+<div id="login-view" class="login-shell">
+  <form class="login-card" id="login-form">
+    <div class="login-brand">
+      <img src="assets/img/cobaco/logo-white.png" alt="">
+      <div>
+        <strong>پنل مدیریت سایت</strong>
+        <span>خانه هوشمند مشهد</span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="username">نام کاربری</label>
+      <input class="input" id="username" name="username" value="admin" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">رمز عبور</label>
+      <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <div class="alert alert--err" id="login-err"></div>
+    <button class="btn btn--primary btn--block" id="login-btn" type="submit">ورود به پنل</button>
+    <p class="form-note" style="text-align:center;margin:0">دسترسی پیش‌فرض: <code>admin</code> / <code>cobaco1404</code></p>
+    <a href="index.html" class="form-note" style="text-align:center;display:block">بازگشت به سایت</a>
+  </form>
+</div>
+
+<!-- ======================= DASHBOARD ======================= -->
+<div id="admin-view" class="admin-shell" hidden>
+  <aside class="admin-side">
+    <div class="admin-side-brand">
+      <img src="assets/img/cobaco/logo-white.png" alt="">
+      <div><strong>مدیریت سایت</strong><span>خانه هوشمند مشهد</span></div>
+    </div>
+    <nav class="admin-nav" id="admin-nav">
+      <button class="admin-link active" data-view="overview"><span>داشبورد</span></button>
+      <button class="admin-link" data-view="products"><span>محصولات</span><b class="pill" data-count="products">۰</b></button>
+      <button class="admin-link" data-view="agents"><span>عوامل اجرایی</span><b class="pill" data-count="agents">۰</b></button>
+      <button class="admin-link" data-view="articles"><span>مقالات و آموزش‌ها</span><b class="pill" data-count="articles">۰</b></button>
+      <button class="admin-link" data-view="gallery"><span>گالری تصاویر</span><b class="pill" data-count="gallery">۰</b></button>
+      <button class="admin-link" data-view="videos"><span>ویدئوهای پروژه</span><b class="pill" data-count="videos">۰</b></button>
+      <button class="admin-link" data-view="messages"><span>پیام‌های دریافتی</span><b class="pill" data-count="unread">۰</b></button>
+      <button class="admin-link" data-view="settings"><span>تنظیمات سایت</span></button>
+    </nav>
+    <div class="admin-side-foot">
+      <a class="btn btn--ghost btn--sm btn--block" href="index.html" target="_blank" rel="noopener">مشاهده سایت ↗</a>
+      <button class="btn btn--danger btn--sm btn--block" id="logout">خروج</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <!-- overview -->
+    <section class="admin-panel" data-panel="overview">
+      <header class="admin-head">
+        <div><h1>داشبورد</h1><p>خلاصه وضعیت محتوای سایت</p></div>
+        <span class="admin-user" id="admin-user"></span>
+      </header>
+      <div class="kpi-grid" id="kpis"></div>
+      <div class="admin-card">
+        <h3>میان‌بُرها</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn btn--primary btn--sm" data-quick="agents">افزودن عضو تیم</button>
+          <button class="btn btn--ghost btn--sm" data-quick="products">افزودن محصول</button>
+          <button class="btn btn--ghost btn--sm" data-quick="articles">نوشتن مقاله</button>
+          <button class="btn btn--ghost btn--sm" data-quick="gallery">افزودن تصویر</button>
+        </div>
+      </div>
+      <div class="admin-card">
+        <h3>راهنمای سریع</h3>
+        <ul style="color:var(--muted);font-size:.88rem;list-style:disc;padding-inline-start:1.2rem;margin-top:10px">
+          <li>تمام محتوای سایت از همین پنل قابل ویرایش است؛ تغییرات بلافاصله روی سایت اعمال می‌شود.</li>
+          <li>اسامی عوامل اجرایی در بخش «عوامل اجرایی» تعریف می‌شوند و محدودیتی در تعداد وجود ندارد.</li>
+          <li>برای تصاویر می‌توانید فایل آپلود کنید یا آدرس تصویر را دستی وارد کنید (PNG، JPG، WEBP، SVG تا ۳۰۰۰ کیلوبایت).</li>
+          <li>ترتیب نمایش با فیلد «ترتیب» کنترل می‌شود؛ عدد کوچک‌تر بالاتر نمایش داده می‌شود.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- generic collection panels are rendered by admin.js -->
+    <section class="admin-panel" data-panel="products" hidden></section>
+    <section class="admin-panel" data-panel="agents" hidden></section>
+    <section class="admin-panel" data-panel="articles" hidden></section>
+    <section class="admin-panel" data-panel="gallery" hidden></section>
+<section class="admin-panel" data-panel="videos" hidden></section>
+    <section class="admin-panel" data-panel="messages" hidden></section>
+    <section class="admin-panel" data-panel="settings" hidden></section>
+  </main>
+</div>
+
+<!-- ======================= MODAL ======================= -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <header class="modal-head">
+      <h3 id="modal-title">ویرایش</h3>
+      <button class="icon-btn" id="modal-close" aria-label="بستن">✕</button>
+    </header>
+    <form id="modal-form" class="modal-body"></form>
+    <footer class="modal-foot">
+      <button class="btn btn--ghost btn--sm" id="modal-cancel" type="button">انصراف</button>
+      <button class="btn btn--primary btn--sm" id="modal-save" type="submit" form="modal-form">ذخیره</button>
+    </footer>
+  </div>
+</div>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>
